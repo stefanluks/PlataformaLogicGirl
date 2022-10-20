@@ -2,7 +2,7 @@ from django.shortcuts import render, redirect
 from app_posts.models import Publicacao, Usuario, ContadorView
 
 def GetTopPosts():
-    posts = list(Publicacao.objects.filter(status="3"))
+    posts = list(Publicacao.objects.filter(tipo="0",status="3"))
     posts.sort(key=lambda x: x.GetViews(), reverse=True)
     return posts[:3]
 
