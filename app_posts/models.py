@@ -37,7 +37,7 @@ class Publicacao(models.Model):
     UID = models.CharField("Código UID da publicação", max_length=200, null=True, blank=True)
     titulo = models.CharField("Título da publicação", max_length=150)
     resumo = models.TextField("Resumo da publicação", max_length=500, null=True, blank=True)
-    conteudo = models.TextField("Conteúdo [ HTML + Bootstrap ]", max_length=10000, null=True, blank=True)
+    conteudo = models.TextField("Conteúdo [ HTML + Bootstrap ]", max_length=50000, null=True, blank=True)
     autor = models.ForeignKey(Usuario,on_delete=models.CASCADE)
     image = models.CharField("Imagem de perfil do Usuario",max_length=10000, null=True, blank=True)
     data_publicacao = models.DateField("Data de Publicação", null=True, blank=True)
