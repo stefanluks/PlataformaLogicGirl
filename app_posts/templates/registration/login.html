@@ -1,0 +1,20 @@
+{% extends '../base.html' %}
+{% load static %}
+{% block page %}
+<div class="container w-100 h-100 py-5 d-flex align-items-center justify-content-center">
+    <form action="." id="formLogin" class="my-4 py-3 px-3 w-50 form-control" method="post">
+        <h3 class="fs-2 w-100 text-center">LOGIN</h3>
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit" class="btn btn-primary w-100">Entrar</button>
+    </form>
+</div>
+{% endblock %}
+{% block page_script %}
+    <script>
+        let form = document.getElementById("formLogin");
+        form.querySelectorAll("p").forEach(p => { p.className = "mb-3"});
+        form.querySelectorAll("label").forEach(p => { p.className = "form-label"});
+        form.querySelectorAll("input").forEach(p => { p.className = "form-control"});
+    </script>
+{% endblock %}

@@ -1,0 +1,346 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block page_head %}
+<link rel="stylesheet" href="{% static 'estilos/fonts.css' %}">
+<style>
+    .edit-titulo, .edit-resumo{
+        border: none;
+        outline: none;
+        background-color: transparent;
+        resize: none;
+    }
+    .ferramentas {
+        border-radius: 10px 10px 0 0;
+    }
+
+    .ferramentas div,
+    .ferramentas label,
+    .ferramentas button {
+        margin-top: 5px;
+        border: none;
+    }
+
+    iframe {
+        border-radius: 0 0 10px 10px;
+        height: calc(100vh - 80px);
+        box-sizing: border-box;
+        padding: 10px;
+    }
+
+    .btn-font {
+        width: 120px;
+        height: 40px;
+        background-color: white;
+        display: flex;
+        align-items: center;
+        color: black;
+        justify-content: center;
+        border-radius: 5px;
+    }
+
+    .btn-font i {
+        width: 40px;
+        height: 40px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .btn-ferramenta {
+        position: relative;
+        width: 40px;
+        height: 40px;
+        margin: 0px 3px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 50%;
+        background-color: white;
+        color: black;
+        cursor: pointer;
+        transition: .5s;
+    }
+
+    .btn-ferramenta:hover {
+        background-color: #837f7f;
+        color: white;
+    }
+
+    .textColor {
+        color: black;
+        font-weight: bold;
+        font-size: 20px;
+    }
+
+    select {
+        width: 100px !important;
+        height: 40px;
+        text-align: center;
+        align-items: center;
+        border-radius: 0px 10px 10px 0px;
+        justify-content: center;
+        font-weight: bold;
+        border: none;
+        user-select: none;
+        outline: none;
+        cursor: pointer;
+        transition: .7s;
+    }
+
+    select option {
+        margin: 0 !important;
+        padding: 0 !important;
+        width: 100%;
+    }
+
+    .cortar {
+        position: absolute;
+        width: 60%;
+        height: 1px;
+        background-color: black;
+        transform: rotate(45deg);
+    }
+
+    .bi-palette-fill {
+        color: #7889DE;
+    }
+</style>
+{% endblock %}
+
+{% block page %}
+    <form id="formPost" action="{% url 'EditarPost' post.UID %}" method="post">
+        {% csrf_token %}
+        <div class="container-fluid bg bg-success py-3 bg-opacity-50">
+            <div class="container py-2">
+                <div class="titulo w-100 py-2 d-flex align-items-start flex-column">
+                    <input name="titulo" class="edit-titulo fs-1 px-1 my-0 text-light" style="font-family: fantasy; letter-spacing: 1.5px;" value="{{post.titulo}}" />
+                    <div class="linha w-50 bg bg-light" style="height: 3px;"></div>
+                    <textarea name="resumo" class="edit-resumo fs-5 px-1 my-0 text-light">{{post.resumo}}</textarea>
+                </div>
+            </div>
+        </div>
+        <div class="container-fluid">
+            <div class="w-100 py-2 ferramentas flex-wrap bg bg-success border-dark border text-light d-flex align-items-center justify-content-around">
+                <div class="btn-font">
+                    <i class="bi bi-fonts"></i>
+                    <select name="fontFamily" id="fontFamilies" class="">
+                    </select>
+                </div>
+                <div class="btn-font">
+                    <i class="bi bi-fonts"></i>
+                    <select name="fontSize" id="fontSizes" class="">
+                        <option value="1">1</option>
+                        <option value="2">2</option>
+                        <option value="3">3</option>
+                        <option value="4">4</option>
+                        <option value="5">5</option>
+                        <option value="6">6</option>
+                        <option value="7">7</option>
+                        <option value="8">8</option>
+                    </select>
+                </div>
+                <div class="formato d-flex align-items-center justify-content-center">
+                    <label for="textColor" class="btn-ferramenta" cmd="bold">
+                        <i class="textColor">A</i>
+                        <input type="color" value="#000000" id="textColor" hidden>
+                    </label>
+                    <div class="btn-ferramenta" cmd="bold">
+                        <i class="bi bi-type-bold"></i>
+                    </div>
+                    <div class="btn-ferramenta" cmd="italic">
+                        <i class="bi bi-type-italic"></i>
+                    </div>
+                    <div class="btn-ferramenta" cmd="underline">
+                        <i class="bi bi-type-underline"></i>
+                    </div>
+                </div>
+                <div class="alinhamento d-flex align-items-center justify-content-center">
+                    <div class="btn-ferramenta" cmd="justifyLeft">
+                        <i class="bi bi-justify-left"></i>
+                    </div>
+                    <div class="btn-ferramenta" cmd="justifyCenter">
+                        <i class="bi bi-text-center"></i>
+                    </div>
+                    <div class="btn-ferramenta" cmd="justifyRight">
+                        <i class="bi bi-justify-right"></i>
+                    </div>
+                </div>
+                <div class="containers d-flex align-items-center justify-content-center">
+                    <div class="btn-ferramenta" cmd="container">
+                        <i class="bi bi-bounding-box-circles"></i>
+                    </div>
+                    <div class="btn-ferramenta" cmd="container-fluid">
+                        <i class="bi bi-fullscreen"></i>
+                    </div>
+                    <div class="btn-ferramenta" cmd="flex-row">
+                        <i class="bi bi-arrow-bar-right"></i>
+                    </div>
+                    <div class="btn-ferramenta" cmd="flex-column">
+                        <i class="bi bi-arrow-bar-down"></i>
+                    </div>
+                    <label for="selectColor" class="btn-ferramenta" cmd="">
+                        <i class="bi bi-palette-fill"></i>
+                        <input type="color" value="#7889DE" id="selectColor" hidden>
+                    </label>
+                </div>
+                <div class="hiperlink d-flex align-items-center justify-content-center">
+                    <div class="btn-ferramenta" cmd="img-up">
+                        <i class="bi bi-caret-up-fill"></i>
+                    </div>
+                    <div class="btn-ferramenta" cmd="img-down">
+                        <i class="bi bi-caret-down-fill"></i>
+                    </div>
+                    <button class="btn-ferramenta" data-bs-toggle="modal" data-bs-target="#imageModal">
+                        <i class="bi bi-image"></i>
+                    </button>
+                    <button class="btn-ferramenta" data-bs-toggle="modal" data-bs-target="#linkModal">
+                        <i class="bi bi-link"></i>
+                    </button>
+                    <div class="btn-ferramenta" cmd="unlink">
+                        <i class="bi bi-link-45deg"></i>
+                        <i class="cortar"></i>
+                    </div>
+                </div>
+                <div class="btn-ferramenta" id="btnSave">
+                    <i class="bi bi-download"></i>
+                </div>
+            </div>
+            <iframe contenteditable="true" class="w-100 border border-dark" src="about::blank" id="editor"></iframe>
+        </div>
+        <textarea name="conteudo" id="conteudoInput" hidden></textarea>
+    </form>
+    <!-- Modal LINK -->
+    <div class="modal fade" id="linkModal" tabindex="-1" aria-labelledby="modalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header bg bg-secondary">
+                    <h1 class="modal-title text-light fs-3" id="modalLabel">Adicionar um link</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body bg-opacity-50 bg-secondary">
+                    <input type="text" id="inputlinkModal" class="form-control" placeholder="Digite o link: " value="https://stefanlucas.com">
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn-ferramenta btn btn-success w-100" data-bs-dismiss="modal" cmd="createLink">Salvar</button>
+                    <button type="button" class="btn btn-danger w-100" data-bs-dismiss="modal">Cancelar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Modal IMG -->
+    <div class="modal fade" id="imageModal" tabindex="-1" aria-labelledby="modalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header bg bg-secondary">
+                    <h1 class="modal-title text-light fs-3" id="modalLabel">Url da Imagem</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body bg-opacity-50 bg-secondary">
+                    <input type="text" id="linkIMG" class="form-control" placeholder="Digite o link da imagem: ">
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn-ferramenta btn btn-success w-100" data-bs-dismiss="modal" cmd="addimage">Salvar</button>
+                    <button type="button" class="btn btn-danger w-100" data-bs-dismiss="modal">Cancelar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block page_script %}
+    <script>
+        const fonts = ["Arial","Calibri","Comic Sans MS","Impact","Brenza","Circus",'Milestone','Titania','Titania Outline','Titania Shadow']
+        window.onload = () => {
+            const conteudo = `{{post.conteudo | safe}}`
+            const link = document.getElementById("inputlinkModal");
+            const linkIMG = document.getElementById("linkIMG");
+            const form = document.getElementById("formPost");
+            const conteudoInput = document.getElementById("conteudoInput");
+            const editor = document.getElementById("editor");
+            const btnSave = document.getElementById("btnSave");
+            editor.contentDocument.designMode = "on";
+            let exec = editor.contentDocument;
+            btnSave.addEventListener("click", () => {
+                conteudoInput.value = exec.documentElement.querySelector("body").innerHTML;
+                form.submit();
+            });
+            let corEscolhida = "#7889DE";
+            let corfont = "#000000";
+            let ElementSelecionado = null;
+            let imageAdded = null;
+            console.log(conteudo)
+            exec.documentElement.querySelector("body").innerHTML = conteudo;
+            // addBootstrap(exec);
+            document.querySelectorAll(".btn-ferramenta").forEach(btn => {
+                btn.addEventListener("click", () => {
+                    if (btn.getAttribute("cmd") != "container") {
+                        if (btn.getAttribute("cmd") == "flex-column" || btn.getAttribute("cmd") == "flex-row") {
+                            if (ElementSelecionado != null) ElementSelecionado.classList.add(btn.getAttribute("cmd"));
+                        }
+                        if (btn.getAttribute("cmd") == "download") { console.log(exec.documentElement.querySelector("body").innerHTML); }
+                        if (btn.getAttribute("cmd") == "img-down") {
+                            if (imageAdded != null) {
+                                let tam = parseInt(imageAdded.className.split("-")[1]);
+                                if (tam > 25) imageAdded.className = "w-" + (tam - 25);
+                            }
+                        }
+                        if (btn.getAttribute("cmd") == "img-up") {
+                            if (imageAdded != null) {
+                                let tam = parseInt(imageAdded.className.split("-")[1]);
+                                if (tam < 100) imageAdded.className = "w-" + (tam + 25);
+                            }
+                        }
+                        if (btn.getAttribute("cmd") == "addimage") {
+                            let img = new Image();
+                            img.src = linkIMG.value;
+                            img.className = "w-100";
+                            if (ElementSelecionado != null) {
+                                ElementSelecionado.appendChild(img);
+                            } else {
+                                exec.documentElement.querySelector("body").appendChild(img);
+                            }
+                            imageAdded = img;
+                        }
+                        if (btn.getAttribute("cmd") == "createLink") {
+                            console.log(link.value);
+                            exec.execCommand(btn.getAttribute("cmd"), false, link.value);
+                        } else {
+                            exec.execCommand(btn.getAttribute("cmd"), false, null);
+                        }
+                    } else if (btn.getAttribute("cmd") == "container" || btn.getAttribute("cmd") == "container-fluid") {
+                        let body = exec.documentElement.querySelector("body");
+                        let div = document.createElement("div");
+                        div.className = btn.getAttribute("cmd") + " py-2";
+                        div.style.minHeight = "20px";
+                        div.style.backgroundColor = corEscolhida;
+                        body.appendChild(div);
+                        ElementSelecionado = div;
+                    }
+                });
+            });
+
+            document.getElementById("selectColor").addEventListener("change", () => {
+                corEscolhida = document.getElementById("selectColor").value;
+                document.querySelector(".bi-palette-fill").style.color = corEscolhida;
+                if (ElementSelecionado != null) {
+                    ElementSelecionado.style.backgroundColor = corEscolhida;
+                }
+            });
+
+            document.getElementById("textColor").addEventListener("change", () => {
+                corfont = document.getElementById("textColor").value;
+                document.querySelector(".textColor").style.color = corfont;
+                exec.getSelection().focusNode.parentElement.style.color = corfont;
+            });
+
+            document.getElementById("fontSizes").addEventListener("change", () => {
+                exec.execCommand("fontSize", false, document.getElementById("fontSizes").value);
+            });
+
+            fonts.forEach(font => { document.getElementById("fontFamilies").innerHTML += `<option value="${font}">${font}</option>` });
+            document.getElementById("fontFamilies").addEventListener("change", () => {
+                exec.execCommand("fontName", false, document.getElementById("fontFamilies").value);
+            });
+        }
+    </script>
+{% endblock %}

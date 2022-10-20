@@ -1,0 +1,137 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block page_head %}
+    <style>
+        .qtdPosts{
+            width: 30px;
+            height: 30px;
+            background-color: black;
+            margin-right: 5px;
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .img-card-equipe{
+            min-width: 30% !important;
+            width: 30% !important;
+            height: 200px;
+            object-fit: cover;
+            object-position: 10px;
+            margin: 0px;
+            padding: 0px;
+        }
+        .card-equipe{
+            transition: .7s;
+        }
+        .card-equipe:hover{
+            box-shadow: 0 0 15px blue !important;
+        }
+    </style>
+{% endblock %}
+
+{% block page %}
+    <div class="container-fluid bg bg-success">
+        <div class="container">
+            <div class="row py-4 align-items-center">
+                <div class="col text-center">
+                    <div class="img-topo"></div>
+                </div>
+                <div class="col-8 text-start">
+                    <h3 class="fs-1 text-light d-flex flex-column align-items-start justify-content-between">LOGIC GIRL</h3>
+                    <p class="text-light" style="text-align: justify;">
+                        Plataforma Logic Girl desenvolvida para divulgar pesquisas científicas de mulheres na tecnologia. A plataforma foi criada com o objetivo de divulgar textos, artigos e projetos focados em protagonistas femininas e na participação de mulheres em diversos
+                        campos tecnológicos, além de incentivar a leitura e a busca de informações sobre mulheres que fazem ciência.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- TOP POSTS -->
+    <div class="container-fluid bg bg-secondary bg-opacity-25">
+        <div class="container py-4">
+            <div class="titulo w-100 py-3 d-flex align-items-start flex-column">
+                <h3 class="fs-1 py-2 my-0 text-success" style="font-family: fantasy; letter-spacing: 1.5px;">Publicações Mais Vistas</h3>
+                <div class="linha w-50 bg bg-success" style="height: 5px;"></div>
+            </div>
+            <div class="row py-2 align-items-center">
+                {% for p in posts %}
+                    <div class="col">
+                        <div class="card" style="width: 18rem; border-radius: 15px; height: 400px;">
+                            <img src="https://inforchannel.com.br/wp-content/uploads/2018/09/mulher-TI.jpeg.webp" class="card-img-top" style="border-radius: 15px 15px 0px 0px;">
+                            <div class="card-body d-flex flex-column align-items-start justify-content-around">
+                                <h5 class="card-title">TI também é coisa de mulher</h5>
+                                <p class="card-text m-0">
+                                    <b class="m-0 p-0"><i class="bi bi-person-square"></i> Natanna Rocha</b>
+                                    <p class="m-0 p-0"><i class="bi bi-calendar-date"></i> 20 de novembro de 2021</p>
+                                </p>
+                                <a href="#" class="btn btn-success w-100">Saiba mais</a>
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+    <!-- TOP JOGOS -->
+    <div class="container-fluid bg bg-success bg-opacity-25">
+        <div class="container py-4">
+            <div class="titulo w-100 py-3 d-flex align-items-end flex-column">
+                <h3 class="fs-1 py-2 my-0 text-secondary" style="font-family: fantasy; letter-spacing: 1.5px;">Jogos Mais Populares</h3>
+                <div class="linha w-50 bg bg-secondary" style="height: 5px;"></div>
+            </div>
+            <div class="row py-2 align-items-center">
+                {% for j in jogos %}
+                    <div class="col">
+                        <div class="card" style="width: 18rem; border-radius: 15px; height: 400px;">
+                            <img src="https://inforchannel.com.br/wp-content/uploads/2018/09/mulher-TI.jpeg.webp" class="card-img-top" style="border-radius: 15px 15px 0px 0px;">
+                            <div class="card-body d-flex flex-column align-items-start justify-content-around">
+                                <h5 class="card-title">TI também é coisa de mulher</h5>
+                                <p class="card-text m-0">
+                                    resumo
+                                </p>
+                                <a href="" class="btn btn-success w-100">Saiba mais</a>
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+    <!--  EQUIPE -->
+    <div class="container-fluid bg bg-secondary bg-opacity-25">
+        <div class="container py-4">
+            <div class="titulo w-100 py-3 d-flex align-items-center flex-column">
+                <h3 class="fs-1 py-2 my-0 text-dark" style="font-family: fantasy; letter-spacing: 1.5px;">Equipe</h3>
+                <div class="linha w-50 bg bg-dark" style="height: 5px;"></div>
+            </div>
+            <div class="row py-2 align-items-center">
+                {% for e in equipe %}
+                <a href="{% url 'Perfil' e.username %}" class="card-equipe text-decoration-none text-dark card px-0 mb-3" style="width: 540px; height: 200px;">
+                    <div class="row w-100 g-0 h-100 m-0">
+                      <div class="col-md-4 h-100">
+                        {% if e.image %}
+                            <img src="{{e.image }}" class="img-fluid img-card-equipe rounded-start" alt="Foto perfil de {{e.username}}">
+                        {% else %}
+                            <img src="{% static 'perfil/vazio.jpg' %}" class="img-fluid img-card-equipe rounded-start" alt="Foto perfil da Natanna">
+                        {% endif %}
+                      </div>
+                      <div class="col-md-8 h-100">
+                        <div class="card-body">
+                          <h5 class="card-title">{{e.first_name}} {{e.last_name}}</h5>
+                          <p class="card-text" style="height: 100px; overflow: hidden;">{{e.biografia}}</p>
+                          <p class="card-text d-flex align-items-center"> <span class="qtdPosts">{{e.getQtdPublicacoes}}</span> <small class="text-muted">Publicações</small></p>
+                        </div>
+                      </div>
+                    </div>
+                </a>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block page_script %}
+{% endblock %}

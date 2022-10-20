@@ -1,0 +1,100 @@
+* {
+    padding: 0;
+    margin: 0;
+}
+
+.ferramentas {
+    border-radius: 10px 10px 0 0;
+}
+
+.ferramentas div,
+.ferramentas label,
+.ferramentas button {
+    margin-top: 5px;
+    border: none;
+}
+
+iframe {
+    border-radius: 0 0 10px 10px;
+    height: calc(100vh - 80px);
+    box-sizing: border-box;
+    padding: 10px;
+}
+
+.btn-font {
+    width: 120px;
+    height: 40px;
+    background-color: white;
+    display: flex;
+    align-items: center;
+    color: black;
+    justify-content: center;
+    border-radius: 5px;
+}
+
+.btn-font i {
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.btn-ferramenta {
+    position: relative;
+    width: 40px;
+    height: 40px;
+    margin: 0px 3px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    background-color: white;
+    color: black;
+    cursor: pointer;
+    transition: .5s;
+}
+
+.btn-ferramenta:hover {
+    background-color: #837f7f;
+    color: white;
+}
+
+.textColor {
+    color: black;
+    font-weight: bold;
+    font-size: 20px;
+}
+
+select {
+    width: 100px !important;
+    height: 40px;
+    text-align: center;
+    align-items: center;
+    border-radius: 0px 10px 10px 0px;
+    justify-content: center;
+    font-weight: bold;
+    border: none;
+    user-select: none;
+    outline: none;
+    cursor: pointer;
+    transition: .7s;
+}
+
+select option {
+    margin: 0 !important;
+    padding: 0 !important;
+    width: 100%;
+}
+
+.cortar {
+    position: absolute;
+    width: 60%;
+    height: 1px;
+    background-color: black;
+    transform: rotate(45deg);
+}
+
+.bi-palette-fill {
+    color: #7889DE;
+}

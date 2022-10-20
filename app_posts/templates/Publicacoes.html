@@ -1,0 +1,51 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block page_head %}
+{% endblock %}
+
+{% block page %}
+    <div class="container-fluid bg bg-secondary bg-opacity-25">
+        <div class="container py-4">
+            <div class="titulo w-100 py-3 d-flex align-items-start flex-column">
+                <h3 class="fs-1 py-2 my-0 text-success" style="font-family: fantasy; letter-spacing: 1.5px;">Publicações</h3>
+                <div class="linha w-50 bg bg-success" style="height: 5px;"></div>
+            </div>
+            <div class="row py-2 align-items-center">
+                {% for p in posts %}
+                    <div class="col">
+                        <div class="card" style="width: 18rem; border-radius: 15px; height: 400px;">
+                            {% if p.image %}
+                                <img src="{{p.image}}" class="card-img-top" style="border-radius: 15px 15px 0px 0px;">
+                            {% else %}
+                                <img src="{% static 'imagens/capa_padrao.png' %}" class="card-img-top" style="border-radius: 15px 15px 0px 0px;">
+                            {% endif %}
+                            <div class="card-body d-flex flex-column align-items-start justify-content-around">
+                                <h5 class="card-title">{{p.titulo}}</h5>
+                                <p class="card-text m-0">
+                                    <b class="m-0 p-0"><i class="bi bi-person-square"></i> @{{p.autor}}</b>
+                                    <p class="m-0 p-0">
+                                        {% if p.status == "0" %}
+                                            <i class="bi bi-check-circle"></i>
+                                        {% elif p.status == "1" %}
+                                            <i class="text-success bi bi-check-circle-fill"></i>
+                                        {% elif p.status == "2" %}
+                                            <i class="text-warning bi bi-check-circle-fill"></i>
+                                        {% elif p.status == "3" %}
+                                            <i class="text-success bi bi-clipboard-check-fill"></i>
+                                        {% endif %}
+                                        {{p.getStatus}}
+                                    </p>
+                                    <p class="m-0 p-0"><i class="bi bi-calendar-date"></i> {{ p.data_publicacao }}</p>
+                                </p>
+                                <a href="#" class="btn btn-success w-100">Saiba Mais</a>
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block page_script %}
+{% endblock %}

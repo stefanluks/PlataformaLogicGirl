@@ -1,0 +1,159 @@
+<!doctype html>
+{% load static %}
+<html lang="pt-br">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Logic Girl | {{title}}</title>
+    {% block page_head %}
+    {% endblock %}
+    <style>
+        .espaco {
+            margin-top: 50px;
+        }
+
+        .img-logo {
+            width: 150px;
+        }
+
+        nav {
+            border-bottom: 1px solid gray;
+        }
+
+        .navbar-nav {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .nav-link {
+            width: max-content;
+            display: flex !important;
+            align-items: center !important;
+            justify-content: center !important;
+            position: relative;
+        }
+
+        .nav-link i {
+            color: black;
+            cursor: pointer;
+        }
+
+        .nav-link i:hover+span {
+            width: max-content;
+            font-size: 16px;
+            padding: 2px 4px;
+        }
+
+        .nav-link span {
+            width: 0px;
+            font-size: 0px;
+            border-radius: 5px;
+            height: 20px;
+            background-color: black;
+            color: white;
+            transition: .7s;
+            margin: 0px 5px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .card {
+            box-shadow: 0 0 15px black;
+            margin: 10px !important;
+        }
+
+        .card img {
+            width: 18rem !important;
+            height: 200px !important;
+            object-fit: cover;
+            object-position: 0px 0px;
+        }
+
+        .img-topo {
+            width: 350px;
+            height: 200px;
+            border-radius: 0px 20px 20px 0px;
+            object-fit: cover;
+            object-position: 10px;
+            opacity: 1;
+            background-repeat: no-repeat;
+            background-size: 100% 100%, cover;
+            background-image: linear-gradient(to right, #198754 15%, transparent 85%), url("{% static 'imagens/women_hacker.webp' %}");
+        }
+    </style>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.9.1/font/bootstrap-icons.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
+</head>
+<body>
+    <nav class="navbar fixed-top navbar-expand-lg bg-light">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="{% url 'Home' %}">
+                <img src="{% static 'imagens/logo.png' %}" class="img-logo"></a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+                <div class="navbar-nav">
+                    {% if navActive == "Sobre" %}
+                        <a class="nav-link active" aria-current="page" href="{% url 'Home' %}">Sobre</a>
+                    {% else %}
+                        <a class="nav-link" aria-current="page" href="{% url 'Home' %}">Sobre</a>
+                    {% endif %}
+                    {% if navActive == "Publicacoes" %}
+                        <a class="nav-link active" href="{% url 'Publicacoes' %}">Publicações</a>
+                    {% else %}
+                        <a class="nav-link" href="{% url 'Publicacoes' %}">Publicações</a>
+                    {% endif %}
+                    {% if navActive == "Jogos" %}
+                        <a class="nav-link active" href="{% url 'Jogos' %}">Jogos</a>
+                    {% else %}
+                        <a class="nav-link" href="{% url 'Jogos' %}">Jogos</a>
+                    {% endif %}
+                    {% if request.user.is_authenticated %}
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                {{ request.user.username }}
+                            </a>
+                            <ul class="dropdown-menu">
+                            <li><a class="dropdown-item" href="{% url 'Perfil' request.user.username %}">Minhas Publicações</a></li>
+                            {% if request.user.is_superuser %}
+                                <li><hr class="dropdown-divider"></li>
+                                <li><a class="dropdown-item" href="/admin/">Admin Django</a></li>
+                            {% endif %}
+                            <li><hr class="dropdown-divider"></li>
+                            <li><a class="dropdown-item" href="{% url 'logout' %}">Sair</a></li>
+                            </ul>
+                        </li>
+                    {% else %}
+                        <a class="nav-link" href="{% url 'login' %}">
+                            <i class="bi bi-box-arrow-in-right"></i>
+                            <span>Entrar</span>
+                        </a>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </nav>
+    <div class="espaco"></div>
+    {% block page %}
+    {% endblock %}
+    <div class="container-fluid bg bg-dark">
+        <div class="container py-4">
+            <div class="titulo w-100 py-3 d-flex align-items-start flex-column">
+                <p class="py-2 my-0 text-light" style="font-size: 18px; letter-spacing: 1.5px;">©Logic Girl - todos direitos reservados</p>
+                <div class="linha w-50 bg bg-light" style="height: 2px;"></div>
+                <p class="py-2 my-0 text-light" style="font-size: 15px; letter-spacing: 1.5px;">
+                    <a class="text-light text-decoration-none mx-2" href="https://www.instagram.com/logic__girl_/"><i class="bi bi-instagram"> @logic__girl_</i></a>
+                    <a class="text-light text-decoration-none mx-2" href="#"><i class="bi bi-file-spreadsheet"> +55 (63) 3333-3333</i></a>
+                    <a class="text-light text-decoration-none mx-2" href="#"><i class="bi bi-envelope"> logicgirl7@gmail.com</i></a>
+                </p>
+            </div>
+        </div>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3" crossorigin="anonymous"></script>
+    {% block page_script %}
+    {% endblock %}
+</body>
+</html>
