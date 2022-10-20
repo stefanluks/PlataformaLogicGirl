@@ -27,7 +27,7 @@ def Publicacoes(request):
     return render(request, 'Publicacoes.html', {
         "title":"Publicações",
         "navActive":"Publicacoes",
-        "posts":list(Publicacao.objects.filter(status="3"))
+        "posts":list(Publicacao.objects.filter(status="3", tipo="0"))
     })
 
 
@@ -35,7 +35,7 @@ def Jogos(request):
     return render(request, 'Jogos.html', {
         "title":"Jogos",
         "navActive":"Jogos",
-        "jogos":Publicacao.objects.filter(tipo = "1")
+        "jogos":Publicacao.objects.filter(tipo = "1", status='3')
     })
 
 
