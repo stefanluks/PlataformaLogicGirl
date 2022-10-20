@@ -75,6 +75,16 @@ class Publicacao(models.Model):
         return self.estados[int(self.status)][1]
 
 
+    def GetViews(self):
+        if ContadorView.objects.filter(post=self):
+            return ContadorView.objects.get(post=self).views
+        else:
+            cont = ContadorView()
+            cont.post = self
+            cont.views = 0
+            cont.save()
+            return 0
+
 
 class ContadorView(models.Model):
     qtd = models.IntegerField("Quantidade de views",default=0)
