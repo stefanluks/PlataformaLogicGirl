@@ -8,7 +8,7 @@ def GetTopPosts():
 
 
 def GetTopJogos():
-    jogos = list(Publicacao.objects.filter(tipo = "1"))
+    jogos = list(Publicacao.objects.filter(tipo = "1",status="3"))
     jogos.sort(key=lambda x: x.GetViews(), reverse=True)
     return jogos[:3]
 
