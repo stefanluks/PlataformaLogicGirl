@@ -66,12 +66,12 @@ def Post(request, uid):
         post = Publicacao.objects.get(UID = uid)
         if ContadorView.objects.filter(publicacao = post):
             cont = ContadorView.objects.get(publicacao = post)
-            cont.views += 1
+            cont.qtd += 1
             cont.save()
         else:
             cont = ContadorView()
-            cont.post = post
-            cont.views = 1
+            cont.publicacao = post
+            cont.qtd = 1
             cont.save()
         edicao = False
         if request.user.is_authenticated:
