@@ -74,8 +74,8 @@ class Publicacao(models.Model):
 
 
     def GetViews(self):
-        if ContadorView.objects.filter(post=self):
-            return ContadorView.objects.get(post=self).qtd
+        if ContadorView.objects.filter(publicacao=self):
+            return ContadorView.objects.get(publicacao=self).qtd
         else:
             cont = ContadorView()
             cont.publicacao = self

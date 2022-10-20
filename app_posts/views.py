@@ -64,8 +64,8 @@ def Perfil(request, user):
 def Post(request, uid):
     if Publicacao.objects.filter(UID = uid):
         post = Publicacao.objects.get(UID = uid)
-        if ContadorView.objects.filter(post = post):
-            cont = ContadorView.objects.get(post = post)
+        if ContadorView.objects.filter(publicacao = post):
+            cont = ContadorView.objects.get(publicacao = post)
             cont.views += 1
             cont.save()
         else:
