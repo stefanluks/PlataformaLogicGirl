@@ -21,13 +21,13 @@
                 <h3 class="fs-1 text-light d-flex flex-column align-items-start justify-content-between">{{usuario.first_name}} {{usuario.last_name}}</h3>
                 <p class="text-light d-flex flex-column" style="text-align: justify;">
                     <span class="fs-5">{{usuario.biografia}}</span>
-                    <span class="bg text-dark fs-5 p-1 my-2 rounded border d-flex align-items-center justify-content-between">
+                    <span class="bg text-light fs-5 px-2 my-2 rounded border d-flex align-items-center justify-content-between">
                         {% if usuario.getQtdPublicacoes > 1 %} 
                             {{usuario.getQtdPublicacoes}} Publicações
                         {% else %}
                             {{usuario.getQtdPublicacoes}} Publicação
                         {% endif %}
-                        <a href="" class="btn btn-light">Nova Publicação</a>
+                        <a href="{% url 'NovoPost' %}" class="btn btn-light">Nova Publicação</a>
                     </span>
                 </p>
             </div>
