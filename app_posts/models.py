@@ -1,6 +1,4 @@
 from datetime import date
-from email.policy import default
-from sqlite3 import Date
 from django.db import models
 from django.contrib.auth.models import User
 
@@ -77,11 +75,11 @@ class Publicacao(models.Model):
 
     def GetViews(self):
         if ContadorView.objects.filter(post=self):
-            return ContadorView.objects.get(post=self).views
+            return ContadorView.objects.get(post=self).qtd
         else:
             cont = ContadorView()
-            cont.post = self
-            cont.views = 0
+            cont.publicacao = self
+            cont.qtd = 0
             cont.save()
             return 0
 
