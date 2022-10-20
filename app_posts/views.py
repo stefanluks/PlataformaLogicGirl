@@ -1,12 +1,24 @@
 from django.shortcuts import render, redirect
-from app_posts.models import Publicacao, Usuario
+from app_posts.models import Publicacao, Usuario, ContadorView
+
+def GetTopPosts():
+    posts = list(Publicacao.objects.filter(status="3"))
+    posts.sort(key=lambda x: x.GetViews(), reverse=True)
+    return posts[:3]
+
+
+def GetTopJogos():
+    jogos = list(Publicacao.objects.filter(tipo = "1"))
+    jogos.sort(key=lambda x: x.GetViews(), reverse=True)
+    return jogos[:3]
+
 
 def Home(request):
     return render(request, 'home.html', {
         "title":"Home",
         "navActive":"Sobre",
-        "posts": [0, 0, 0],
-        "jogos": [0, 0, 0],
+        "posts": GetTopPosts(),
+        "jogos": GetTopJogos(),
         "equipe": Usuario.objects.filter(classe = "2")
     })
 
@@ -52,6 +64,15 @@ def Perfil(request, user):
 def Post(request, uid):
     if Publicacao.objects.filter(UID = uid):
         post = Publicacao.objects.get(UID = uid)
+        if ContadorView.objects.filter(post = post):
+            cont = ContadorView.objects.get(post = post)
+            cont.views += 1
+            cont.save()
+        else:
+            cont = ContadorView()
+            cont.post = post
+            cont.views = 1
+            cont.save()
         edicao = False
         if request.user.is_authenticated:
             user = Usuario.objects.get(username = request.user.username)
