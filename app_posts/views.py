@@ -101,3 +101,21 @@ def EditarPost(request, uid):
                 "navActive":"ERRO",
                 "msg":"'Publicação não encontrada!'"
             })
+
+
+def NovoPost(request):
+    if request.user.is_authenticated:
+        user = Usuario.objects.get(username = request.user.username)
+        if request.method == "GET":
+            return render(request, 'NovoPost.html', {
+                "title":"Novo Post",
+                "navActive":"Publicacoes",
+            })
+        elif request.method == "POST":
+            post = Publicacao()
+            post.titulo = request.POST["titulo"]
+            post.resumo = request.POST["resumo"]
+            post.conteudo = request.POST["conteudo"]
+            post.autor = user
+            post.save()
+            return redirect("Post",post.UID)
